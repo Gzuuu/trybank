@@ -54,11 +54,15 @@ public class Trybank
     }
 
     // 3. Construa a funcionalidade de fazer Logout
-    public void Logout()
+    private void VerifyLogged()
     {
         if (!Logged) {
             throw new AccessViolationException("Usuário não está logado");
         }
+    }
+    public void Logout()
+    {
+        VerifyLogged();
         Logged = false;
         loggedUser = -99;
     }
@@ -66,16 +70,15 @@ public class Trybank
     // 4. Construa a funcionalidade de checar o saldo
     public int CheckBalance()
     {
-        if (!Logged){
-            throw new AccessViolationException("Usuário não está logado");
-        }
+        VerifyLogged();
         return Bank[loggedUser, 3];
     }
 
     // 5. Construa a funcionalidade de depositar dinheiro
     public void Deposit(int value)
     {
-        throw new NotImplementedException();
+        VerifyLogged();
+        Bank[loggedUser, 3] = value;
     }
 
     // 6. Construa a funcionalidade de sacar dinheiro
